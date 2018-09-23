@@ -1,20 +1,18 @@
-#include "main.h"
+#include "huffmanTree.h"
 
 using namespace std;
 
 int main() {
     list<listNode> frequencyList;
-    list<listNode>::iterator it;
+    priority_queue<listNode,vector<listNode>, compare> huffmanTreeQueue;
     listNode tempNode;
     ifstream file("C:\\Users\\Does\\CLionProjects\\First Task\\input.txt");
-    map<char,int> rangeFrequency;
 
     if (!file.is_open()) {
         cout << "File has not been opened!" << endl;
         return -1;
     }
 
-    int count = 0;
     char buffer;
     bool done = false;
 
@@ -33,15 +31,26 @@ int main() {
             frequencyList.push_back(tempNode);
         }
         done = false;
-        count++;
     }
-    frequencyList.sort();
 
-    treeNode *rootPtr = nullptr;
-
-    for(auto& item : frequencyList) {
-        cout << item.letter << " : " << item.value << endl;
-        push(&rootPtr, &item);
+    for(auto& item : frequencyList){
+        huffmanTreeQueue.push(item);
     }
-    cout << count << " " << frequencyList.size() <<endl;
+
+    while (huffmanTreeQueue.size() != 1){
+        auto lessNode = new(listNode);
+        *lessNode = huffmanTreeQueue.top();
+        huffmanTreeQueue.pop();
+        auto greaterNode = new(listNode);
+        *greaterNode = huffmanTreeQueue.top();
+        huffmanTreeQueue.pop();
+        listNode temp = *push(lessNode, greaterNode);
+        huffmanTreeQueue.push(temp);
+    }
+
+    listNode temp;
+    temp = huffmanTreeQueue.top();
+    huffmanTreeQueue.pop();
+    getCodes(&temp);
+    printTable();
 }

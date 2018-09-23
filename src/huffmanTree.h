@@ -10,18 +10,25 @@
 #include <stack>
 #include <map>
 #include <stdlib.h>
+#include <queue>
 
 #ifndef HUFFMAN_HUFFMANTREE_H
 #define HUFFMAN_HUFFMANTREE_H
 
-using namespace std;
-
 struct listNode {
     char letter;
     int value;
+    listNode* right = nullptr;
+    listNode* left = nullptr;
 public:
-    bool operator<(const listNode& right){
-        return this->value > right.value;
+    /*bool operator < (const listNode& right){
+        return this->value < right.value;
+    }*/
+    listNode operator = (const listNode& newNode){
+        this->letter = newNode.letter;
+        this->value = newNode.value;
+        right = newNode.right;
+        left = newNode.left;
     }
 };
 struct  treeNode {
@@ -30,10 +37,18 @@ struct  treeNode {
     treeNode *left;
     treeNode *right;
 };
-void push(treeNode **head, listNode *element);
-void printTree(treeNode **head);
-class huffmanTree {
+struct compare {
+    bool operator()(const listNode& l, const listNode& r) const
+    {
+        return l.value >= r.value;
+    }
 };
 
+listNode* push(listNode *left, listNode *right);
+void printTree(treeNode **head);
+void getCodes(listNode  *root);
+void printTable();
+class huffmanTree {
+};
 
 #endif //HUFFMAN_HUFFMANTREE_H
