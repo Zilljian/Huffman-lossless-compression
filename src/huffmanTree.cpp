@@ -1,42 +1,8 @@
 #include "huffmanTree.h"
 
 using namespace std;
-   /* void push(treeNode **head, listNode *element) {
-        if (*head == nullptr) {
-            auto *list = new treeNode;
-            list->value = element->value;
-            list->letter = element->letter;
-            list->left = nullptr;
-            list->right = nullptr;
-            *head = list;
-        } else {
-            if (element->value < (*head)->value) {
-                if ((*head)->left == nullptr) {
-                    auto *list = new treeNode;
-                    list->value = element->value;
-                    list->letter = element->letter;
-                    list->left = nullptr;
-                    list->right = nullptr;
-                    (**head).left = list;
-                } else {
-                    push(&(*head)->left, element);
-                }
-            } else if (element->value >= (*head)->value) {
-                if ((*head)->right == nullptr) {
-                    auto *list = new treeNode;
-                    list->value = element->value;
-                    list->letter = element->letter;
-                    list->left = nullptr;
-                    list->right = nullptr;
-                    (**head).right = list;
-                } else {
-                    push(&(*head)->right, element);
-                }
-            }
-        }
-    }*/
-   vector<int> huffmanCode;
-   map<char,vector<int>> charTable;
+   vector<bool> huffmanCode;
+   map<char,vector<bool>> charTable;
 
    listNode* push(listNode *left, listNode *right){
        auto *root = new(listNode);
@@ -57,11 +23,11 @@ using namespace std;
     }
     void getCodes(listNode  *root){
         if (root->left != nullptr) {
-            huffmanCode.push_back(1);
+            huffmanCode.push_back(true);
             getCodes(root->left);
         }
         if (root->right != nullptr){
-            huffmanCode.push_back(0);
+            huffmanCode.push_back(false);
             getCodes(root->right);
         }
         if(root->right == nullptr && root->left == nullptr)charTable[root->letter] = huffmanCode;
@@ -69,7 +35,13 @@ using namespace std;
    }
     void printTable (){
        for(auto& item : charTable){
-           cout << item.first << " : ";
+           int letter2 = int(item.first);
+           int k = 128;
+           while(k > 0) {
+               cout << bool(letter2&k);
+               k = k>>1;
+           }
+           cout << " : " << int(item.first) << " : ";
            for(int i : item.second){
                cout << i;
            }

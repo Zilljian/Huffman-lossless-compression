@@ -1,4 +1,5 @@
 #include "huffmanTree.h"
+#include "compression.h"
 
 using namespace std;
 
@@ -33,6 +34,8 @@ int main() {
         done = false;
     }
 
+    file.close();
+
     for(auto& item : frequencyList){
         huffmanTreeQueue.push(item);
     }
@@ -53,4 +56,47 @@ int main() {
     huffmanTreeQueue.pop();
     getCodes(&temp);
     printTable();
+    becomeByte();
+    printByte();
+
+    ofstream fileOutput("C:\\Users\\Does\\CLionProjects\\First Task\\output.txt", ios::out | ios::binary);
+    ifstream fileInput("C:\\Users\\Does\\CLionProjects\\First Task\\input.txt");
+
+    //int uniqueLetter = charTable.size();
+    vector<bool> temp1;
+
+    /*int k = 128;
+    while(k > 0) {
+        unsigned char temp2 = bool(uniqueLetter&k);
+        fileOutput.write(&temp2, sizeof(usigned char));
+        k = k>>1;
+    }*/
+/*
+    for (auto item : charTable) {
+        vector<bool> tempVector = binaryEntity(item.first);
+        int temple = 0;
+        int count = 32768;
+        for (bool item1 : tempVector) {
+            fileOutput << item1;
+        }
+
+        int length = item.second.size();
+        tempVector = binaryEntity(length);
+
+        for (bool item1 : tempVector) {
+            fileOutput << item1;
+        }
+
+        tempVector = item.second;
+
+        for (bool item1 : tempVector) {
+            fileOutput << item1;
+        }
+    }
+
+    while (fileInput.get(buffer)) {
+        vector<bool> tempVector = charTable[buffer];
+
+    }
+*/
 }
