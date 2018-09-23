@@ -57,14 +57,14 @@ using namespace std;
     }
     void getCodes(listNode  *root){
         if (root->left != nullptr) {
-            huffmanCode.push_back(0);
+            huffmanCode.push_back(1);
             getCodes(root->left);
         }
         if (root->right != nullptr){
-            huffmanCode.push_back(1);
+            huffmanCode.push_back(0);
             getCodes(root->right);
         }
-        charTable[root->letter] = huffmanCode;
+        if(root->right == nullptr && root->left == nullptr)charTable[root->letter] = huffmanCode;
         huffmanCode.pop_back();
    }
     void printTable (){
