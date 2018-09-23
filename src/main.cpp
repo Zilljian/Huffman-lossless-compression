@@ -3,6 +3,8 @@
 
 using namespace std;
 
+vector<bool> bufferVector;
+
 int main() {
     list<listNode> frequencyList;
     priority_queue<listNode,vector<listNode>, compare> huffmanTreeQueue;
@@ -55,48 +57,37 @@ int main() {
     temp = huffmanTreeQueue.top();
     huffmanTreeQueue.pop();
     getCodes(&temp);
-    printTable();
-    becomeByte();
-    printByte();
+    //printTable();
+    //becomeByte();
+    //printByte();
 
-    ofstream fileOutput("C:\\Users\\Does\\CLionProjects\\First Task\\output.txt", ios::out | ios::binary);
+    ofstream fileOutput("C:\\Users\\Does\\CLionProjects\\First Task\\output.bin", ios::out | ios::binary);
     ifstream fileInput("C:\\Users\\Does\\CLionProjects\\First Task\\input.txt");
 
-    //int uniqueLetter = charTable.size();
-    vector<bool> temp1;
-
-    /*int k = 128;
-    while(k > 0) {
-        unsigned char temp2 = bool(uniqueLetter&k);
-        fileOutput.write(&temp2, sizeof(usigned char));
-        k = k>>1;
-    }*/
-/*
-    for (auto item : charTable) {
-        vector<bool> tempVector = binaryEntity(item.first);
-        int temple = 0;
-        int count = 32768;
-        for (bool item1 : tempVector) {
-            fileOutput << item1;
-        }
-
-        int length = item.second.size();
-        tempVector = binaryEntity(length);
-
-        for (bool item1 : tempVector) {
-            fileOutput << item1;
-        }
-
-        tempVector = item.second;
-
-        for (bool item1 : tempVector) {
-            fileOutput << item1;
-        }
-    }
-
     while (fileInput.get(buffer)) {
-        vector<bool> tempVector = charTable[buffer];
-
+        bufferVector.insert(bufferVector.end(),charTable[buffer].begin(),charTable[buffer].end());
+        if (bufferVector.size() >= 8){
+            char out = assembleChar();
+            fileOutput.write((char*)&out, sizeof(out));
+        }
     }
-*/
+
+    while(!bufferVector.empty()) {
+        if (bufferVector.size() < 8) {
+            int dim = 8 - bufferVector.size();
+            for (int i = 0; i < dim; i++){
+                bufferVector[i] = 0;
+            }
+            char out = assembleChar();
+            fileOutput.write((char*)&out, sizeof(char));
+        }
+        else if(bufferVector.size() >= 8){
+            char out = assembleChar();
+            fileOutput.write((char*)&out, sizeof(char));
+        }
+    }
+
+    fileInput.close();
+    fileOutput.close();
+
 }

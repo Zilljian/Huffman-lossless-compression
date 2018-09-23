@@ -46,6 +46,5 @@ using namespace std;
                cout << i;
            }
            cout << "\n";
-
        }
    }
