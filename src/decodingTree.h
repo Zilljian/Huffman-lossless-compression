@@ -1,14 +1,13 @@
-//
-// Created by Does on 23.09.2018.
-//
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <stdlib.h>
 
 #ifndef HUFFMAN_DECODINGTREE_H
 #define HUFFMAN_DECODINGTREE_H
 
-
-class decodingTree {
-
-};
-
+void matchBuff();
+void printMatched(char item);
+void decode();
 
 #endif //HUFFMAN_DECODINGTREE_H

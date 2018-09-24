@@ -1,13 +1,7 @@
-#include <string>
-#include <fstream>
 #include <iostream>
-#include <list>
-#include <algorithm>
-#include <queue>
-#include <stack>
 #include <map>
 #include <stdlib.h>
-#include <queue>
+#include <vector>
 
 #ifndef HUFFMAN_HUFFMANTREE_H
 #define HUFFMAN_HUFFMANTREE_H
@@ -28,12 +22,6 @@ public:
         left = newNode.left;
     }
 };
-struct  treeNode {
-    int value;
-    char letter;
-    treeNode *left;
-    treeNode *right;
-};
 struct compare {
     bool operator()(const listNode& l, const listNode& r) const
     {
@@ -45,10 +33,7 @@ extern std::vector<bool> huffmanCode;
 extern std::map<char,std::vector<bool>> charTable;
 
 listNode* push(listNode *left, listNode *right);
-void printTree(treeNode **head);
 void getCodes(listNode  *root);
 void printTable();
-class huffmanTree {
-};
 
 #endif //HUFFMAN_HUFFMANTREE_H

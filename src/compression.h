@@ -3,17 +3,22 @@
 #ifndef HUFFMAN_COMPRESSION_H
 #define HUFFMAN_COMPRESSION_H
 
-extern std::map<char, unsigned long> byteTable;
 extern std::vector<bool> bufferVector;
 
-std::vector<bool> binaryEntity(char);
-std::vector<bool> binaryEntity(int);
-std::vector<bool> binaryEntity(long);
-void becomeByte();
-void printByte();
-char assembleChar();
-
-class compression {
+union byte {
+    char letter;
+    struct {
+        unsigned a0 : 1;
+        unsigned a1 : 1;
+        unsigned a2 : 1;
+        unsigned a3 : 1;
+        unsigned a4 : 1;
+        unsigned a5 : 1;
+        unsigned a6 : 1;
+        unsigned a7 : 1;
+    } bit;
 };
+
+char assembleChar();
 
 #endif //HUFFMAN_COMPRESSION_H

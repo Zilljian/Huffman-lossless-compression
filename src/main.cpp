@@ -1,5 +1,7 @@
 #include "huffmanTree.h"
 #include "compression.h"
+#include "decodingTree.h"
+#include "main.h"
 
 using namespace std;
 
@@ -9,7 +11,7 @@ int main() {
     list<listNode> frequencyList;
     priority_queue<listNode,vector<listNode>, compare> huffmanTreeQueue;
     listNode tempNode;
-    ifstream file("C:\\Users\\Does\\CLionProjects\\First Task\\input1.txt");
+    ifstream file(R"(C:\Users\Does\CLionProjects\First Task\input.txt)");
 
     if (!file.is_open()) {
         cout << "File has not been opened!" << endl;
@@ -59,35 +61,35 @@ int main() {
     getCodes(&temp);
     printTable();
     cout << charTable.size();
-    //becomeByte();
-    //printByte();
 
-    ofstream fileOutput("C:\\Users\\Does\\CLionProjects\\First Task\\output.bin", ios::out | ios::binary);
-    ifstream fileInput("C:\\Users\\Does\\CLionProjects\\First Task\\input1.txt");
+    ofstream fileOutput(R"(C:\Users\Does\CLionProjects\First Task\output.txt)", ios::out | ios::binary);
+    ifstream fileInput(R"(C:\Users\Does\CLionProjects\First Task\input.txt)");
 
     while (fileInput.get(buffer)) {
         bufferVector.insert(bufferVector.end(),charTable[buffer].begin(),charTable[buffer].end());
         if (bufferVector.size() >= 8){
             char out = assembleChar();
-            fileOutput.write((char*)&out, sizeof(out));
+            fileOutput.write(&out, sizeof(out));
         }
     }
 
-    while(!bufferVector.size()) {
+    while(!bufferVector.empty()) { ////
         if (bufferVector.size() < 8) {
             int dim = 8 - bufferVector.size();
             for (int i = 0; i < dim; i++){
-                bufferVector[i] = 0;
+                bufferVector[i] = false;
             }
             char out = assembleChar();
-            fileOutput.write((char*)&out, sizeof(char));
+            fileOutput.write(&out, sizeof(char));
         }
         else if(bufferVector.size() >= 8){
             char out = assembleChar();
-            fileOutput.write((char*)&out, sizeof(char));
+            fileOutput.write(&out, sizeof(char));
         }
     }
 
     fileInput.close();
     fileOutput.close();
+
+    decode();
 }

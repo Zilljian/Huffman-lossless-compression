@@ -1,10 +1,11 @@
 #include "huffmanTree.h"
 
 using namespace std;
-   vector<bool> huffmanCode;
-   map<char,vector<bool>> charTable;
 
-   listNode* push(listNode *left, listNode *right){
+vector<bool> huffmanCode;
+map<char,vector<bool>> charTable;
+
+listNode* push(listNode *left, listNode *right){
        auto *root = new(listNode);
        root->letter = left->letter;
        root->value = left->value + right->value;
@@ -12,16 +13,7 @@ using namespace std;
        root->right = right;
        return root;
     }
-    void printTree(treeNode **head) {
-        if (*head != nullptr) {
-            printTree(&(*head)->left);
-            cout << (*head)->letter << " : " << (*head)->value << endl;
-            printTree(&(*head)->right);
-        } else {
-            return;
-        }
-    }
-    void getCodes(listNode  *root){
+void getCodes(listNode  *root){
         if (root->left != nullptr) {
             huffmanCode.push_back(true);
             getCodes(root->left);
@@ -33,7 +25,7 @@ using namespace std;
         if(root->right == nullptr && root->left == nullptr)charTable[root->letter] = huffmanCode;
         huffmanCode.pop_back();
    }
-    void printTable (){
+void printTable (){
        for(auto& item : charTable){
            int letter2 = int(item.first);
            int k = 128;
