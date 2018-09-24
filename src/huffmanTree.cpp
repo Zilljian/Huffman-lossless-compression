@@ -41,7 +41,7 @@ using namespace std;
                cout << bool(letter2&k);
                k = k>>1;
            }
-           cout << " : " << int(item.first) << " : ";
+           cout << " : " << int(item.first) << " : " << item.first << " : ";
            for(int i : item.second){
                cout << i;
            }

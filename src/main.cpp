@@ -9,7 +9,7 @@ int main() {
     list<listNode> frequencyList;
     priority_queue<listNode,vector<listNode>, compare> huffmanTreeQueue;
     listNode tempNode;
-    ifstream file("C:\\Users\\Does\\CLionProjects\\First Task\\input.txt");
+    ifstream file("C:\\Users\\Does\\CLionProjects\\First Task\\input1.txt");
 
     if (!file.is_open()) {
         cout << "File has not been opened!" << endl;
@@ -57,12 +57,13 @@ int main() {
     temp = huffmanTreeQueue.top();
     huffmanTreeQueue.pop();
     getCodes(&temp);
-    //printTable();
+    printTable();
+    cout << charTable.size();
     //becomeByte();
     //printByte();
 
     ofstream fileOutput("C:\\Users\\Does\\CLionProjects\\First Task\\output.bin", ios::out | ios::binary);
-    ifstream fileInput("C:\\Users\\Does\\CLionProjects\\First Task\\input.txt");
+    ifstream fileInput("C:\\Users\\Does\\CLionProjects\\First Task\\input1.txt");
 
     while (fileInput.get(buffer)) {
         bufferVector.insert(bufferVector.end(),charTable[buffer].begin(),charTable[buffer].end());
@@ -72,7 +73,7 @@ int main() {
         }
     }
 
-    while(!bufferVector.empty()) {
+    while(!bufferVector.size()) {
         if (bufferVector.size() < 8) {
             int dim = 8 - bufferVector.size();
             for (int i = 0; i < dim; i++){
@@ -89,5 +90,4 @@ int main() {
 
     fileInput.close();
     fileOutput.close();
-
 }

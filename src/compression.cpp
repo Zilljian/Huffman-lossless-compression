@@ -4,6 +4,19 @@
 using namespace std;
 
 map<char, unsigned long> byteTable;
+union mask {
+    char letter;
+    struct {
+        unsigned a0 : 1;
+        unsigned a1 : 1;
+        unsigned a2 : 1;
+        unsigned a3 : 1;
+        unsigned a4 : 1;
+        unsigned a5 : 1;
+        unsigned a6 : 1;
+        unsigned a7 : 1;
+    } byte;
+};
 
 vector<bool> binaryEntity(int number){
     vector<bool> tempVector;
@@ -51,34 +64,40 @@ void printByte(){
     }
 }
 char assembleChar(){
-    vector<bool> tempV;
-    char buff = 0;
-    char mask = -128;
+    //char buff = 0;
+    //char mask = -128;
+    mask mask;
 
-    if (bufferVector.size() == 8){
-        tempV = bufferVector;
-        bufferVector.clear();
-        for (auto item : tempV){
-            if (item){
+    mask.byte.a0 = bufferVector[0] & 1;
+    mask.byte.a1 = bufferVector[1] & 1;
+    mask.byte.a2 = bufferVector[2] & 1;
+    mask.byte.a3 = bufferVector[3] & 1;
+    mask.byte.a4 = bufferVector[4] & 1;
+    mask.byte.a5 = bufferVector[5] & 1;
+    mask.byte.a6 = bufferVector[6] & 1;
+    mask.byte.a7 = bufferVector[7] & 1;
+
+    bufferVector.erase(bufferVector.begin(), bufferVector.begin() + 8);
+    return mask.letter;
+
+   /* if (bufferVector.size() == 8){
+        for (int i = 0; i < 8; i++){
+            if (bufferVector[i]){
                 buff = buff | mask;
             }
             mask = mask >> 1;
         }
-        cout <<(int)buff << "\n";
+        bufferVector.clear();
         return buff;
     }
     else if (bufferVector.size() > 8){
         for (int i = 0; i < 8; i++){
-            tempV[i] = bufferVector[i];
-        }
-        bufferVector.erase(bufferVector.begin(), bufferVector.begin() + 8);
-        for (auto item : tempV){
-            if (item){
+            if (bufferVector[i]){
                 buff = buff | mask;
             }
             mask = mask >> 1;
         }
-        cout << (int)buff << "\n";
+        bufferVector.erase(bufferVector.begin(), bufferVector.begin() + 8);
         return buff;
-    }
+    }*/
 }
